@@ -18,7 +18,6 @@ public class CodeEditorApplication extends Application {
 		stage.setTitle("FXCodeEditor");
 		stage.setScene(new Scene(root, 1000, 800));
 		stage.show();
-
 	}
 
 }

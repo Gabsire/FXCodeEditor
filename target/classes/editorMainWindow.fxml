@@ -23,8 +23,8 @@
 	  				<MenuItem fx:id="undoItem" text="Close" onAction="#close" accelerator="Ctrl+Alt+Q" />
 	  			</Menu>
 	  			<Menu text="Edit">
-	  				<MenuItem text="Undo" onAction="#undo" accelerator="Ctrl+X" />
-	  				<MenuItem fx:id="searchItem" text="Search" onAction="#search" accelerator="Ctrl+F" />
+	  				<MenuItem text="Undo" accelerator="Ctrl+X" />
+	  				<MenuItem fx:id="searchItem" text="Search" accelerator="Ctrl+F" />
 	  			</Menu>
       		</MenuBar>	
       	</HBox>
