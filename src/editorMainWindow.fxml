@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language JavaScript?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="mainPane"
+            fx:controller="com.editor.controller.MainController"
+            >
+
+	<VBox fx:id="vbox" layoutY="10.0" layoutX="10.0" >
+		<GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right ="10.0" top="10.0"/>
+     	</GridPane.margin>
+	  	<HBox AnchorPane.leftAnchor="0.0" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
+	  		<MenuBar HBox.hgrow="ALWAYS" fx:id="mainMenuBar" prefWidth="1400.0">
+	  			<Menu text="File">
+	  				<MenuItem fx:id="saveItem" text="Save" onAction="#save" accelerator="Ctrl+S"/>
+	  				<MenuItem fx:id="loadItem" text="Load" onAction="#load" accelerator="Ctrl+L" />
+	  				<MenuItem fx:id="undoItem" text="Close" onAction="#close" accelerator="Ctrl+Alt+Q" />
+	  			</Menu>
+	  			<Menu text="Edit">
+	  				<MenuItem text="Undo" onAction="#undo" accelerator="Ctrl+X" />
+	  				<MenuItem fx:id="searchItem" text="Search" onAction="#search" accelerator="Ctrl+F" />
+	  			</Menu>
+      		</MenuBar>	
+      	</HBox>
+      	<TextArea fx:id="textArea" prefHeight="800" layoutX="10.0">
+      	</TextArea>
+	</VBox>
+</GridPane>
