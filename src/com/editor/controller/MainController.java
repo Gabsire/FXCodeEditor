@@ -1,6 +1,7 @@
 package com.editor.controller;
 
 import java.io.IOException;
+
 import com.editor.service.FileOperationsService;
 
 import javafx.application.Platform;
@@ -24,7 +25,7 @@ public class MainController {
 	}
 
 	@FXML
-	public void load(){
+	public void load() {
 		try {
 			fileOperationsService.load(textArea);
 		} catch (IOException e) {
@@ -36,8 +37,8 @@ public class MainController {
 	public void close() {
 		Platform.exit();
 	}
-	
-	public void handleIOException(String message, StackTraceElement[] stackTraceElements){
+
+	public void handleIOException(String message, StackTraceElement[] stackTraceElements) {
 		System.out.println(message + stackTraceElements.toString());
 	}
 

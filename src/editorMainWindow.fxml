@@ -28,7 +28,9 @@
 	  			</Menu>
       		</MenuBar>	
       	</HBox>
-      	<TextArea fx:id="textArea" prefHeight="800" layoutX="10.0">
-      	</TextArea>
+      	<HBox AnchorPane.leftAnchor="0.0" VBox.vgrow="ALWAYS">
+      	<TreeView fx:id="fileViewer" prefHeight="800" prefWidth="300" layoutX="10.0"></TreeView >
+      	<TextArea fx:id="textArea" prefHeight="800" layoutX="10.0"></TextArea>
+      	   	</HBox>
 	</VBox>
 </GridPane>
