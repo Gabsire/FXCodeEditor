@@ -15,12 +15,9 @@ import javafx.stage.FileChooser;
 
 public class FileOperationsService {
 
-	public void save(TextArea textArea) throws IOException {
+	public Boolean save(TextArea textArea) throws IOException {
 
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save file");
-		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-		fileChooser.getExtensionFilters().add(extensionFilter);
+		FileChooser fileChooser = initializeFileChooser();
 		File file = fileChooser.showSaveDialog(null);
 
 		if (null != textArea && null != file) {
@@ -38,15 +35,14 @@ public class FileOperationsService {
 			});
 			reader.close();
 			writer.close();
+			return true;
 		}
+		return false;
 	}
 
-	public void load(TextArea textArea) throws IOException {
+	public Boolean load(TextArea textArea) throws IOException {
 
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Load file");
-		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-		fileChooser.getExtensionFilters().add(extensionFilter);
+		FileChooser fileChooser = initializeFileChooser();
 		File file = fileChooser.showOpenDialog(null);
 
 		if (null != textArea && null != file) {
@@ -55,6 +51,16 @@ public class FileOperationsService {
 			BufferedReader r = Files.newBufferedReader(Paths.get(file.getPath()), StandardCharsets.UTF_8);
 			r.lines().forEach(s -> content.append(s).append("\n"));
 			textArea.setText(content.toString());
+			return true;
 		}
+		return false;
+	}
+
+	private FileChooser initializeFileChooser() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save file");
+		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+		fileChooser.getExtensionFilters().add(extensionFilter);
+		return fileChooser;
 	}
 }
