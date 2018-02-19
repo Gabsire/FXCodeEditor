@@ -5,8 +5,7 @@
 }
 
 .mainPane .mainContainer .menuBarBox .mainWindowMenuBar {
-	-fx-background-color : linear-gradient(#884dff, #aa80ff, #ddccff);
+	-fx-background-color : linear-gradient(to bottom, #e570e7 0%,#c85ec7 47%,#a849a3 100%);
 	-fx-font-size: 20;
 	-fx-text-fill: white;
-	
 }

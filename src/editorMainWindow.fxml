@@ -13,7 +13,7 @@
             stylesheets="@editorMainWindow.css"
             >
 
-	<VBox fx:id="vbox" layoutY="10.0" layoutX="10.0" styleClass="mainContainer">
+	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer" styleClass="mainContainer">
 		<GridPane.margin>
          <Insets bottom="10.0" left="10.0" right ="10.0" top="10.0"/>
      	</GridPane.margin>

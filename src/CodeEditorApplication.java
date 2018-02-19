@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CodeEditorApplication extends Application {
@@ -44,14 +45,19 @@ public class CodeEditorApplication extends Application {
             HBox hbox = new HBox(
                     numberFactory.apply(line));
             hbox.setAlignment(Pos.CENTER_LEFT);
+            hbox.setPrefWidth(30);
             return hbox;
         };
         codeArea.setParagraphGraphicFactory(graphicFactory);
         codeArea.replaceText("The green arrow will only be on the line where the caret appears.\n\nTry it.");
         codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 14pt; -fx-padding: 10, 0, 0, 0;");
- 
+        
 		stage.setTitle("FXCodeEditor");
 		Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+		
+		VBox mainContainerBox = (VBox) scene.lookup("#mainContainer");
+		mainContainerBox.setSpacing(30);
+		
 		HBox areasBox = (HBox) scene.lookup("#areasBox");
 		areasBox.getChildren().add(codeArea);
 		
