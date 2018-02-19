@@ -1,15 +1,12 @@
 
 
-.mainPane .mainContainer .areasBox .rowNumbers{
-	-fx-background-color : #29B6F6;
+.mainPane {
+	-fx-background-color : purple;
 }
 
-.mainPane .mainContainer .areasBox .rowNumbers {
-	-fx-font-size: 16px;
-	-fx-text-fill : grey;
-}
-
-.mainPane .mainContainer .areasBox .codeText {
-	-fx-font-size: 16px;
-	-fx-text-fill : grey;
+.mainPane .mainContainer .menuBarBox .mainWindowMenuBar {
+	-fx-background-color : linear-gradient(#884dff, #aa80ff, #ddccff);
+	-fx-font-size: 20;
+	-fx-text-fill: white;
+	
 }

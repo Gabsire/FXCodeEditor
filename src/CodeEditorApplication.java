@@ -8,6 +8,8 @@ import org.fxmisc.richtext.StyledTextArea;
 import com.editor.controller.MainController;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -47,13 +49,32 @@ public class CodeEditorApplication extends Application {
         codeArea.setParagraphGraphicFactory(graphicFactory);
         codeArea.replaceText("The green arrow will only be on the line where the caret appears.\n\nTry it.");
         codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 14pt; -fx-padding: 10, 0, 0, 0;");
-        codeArea.setPrefWidth(1200);
-
-
+ 
 		stage.setTitle("FXCodeEditor");
-		Scene scene = new Scene(root, 1600, 800);
+		Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
 		HBox areasBox = (HBox) scene.lookup("#areasBox");
 		areasBox.getChildren().add(codeArea);
+		
+		scene.widthProperty().addListener( 
+			    new ChangeListener(){ 
+
+					@Override
+					public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+						Double width = (Double)newValue;
+			            codeArea.setPrefWidth(width);
+						
+					}
+			    });
+
+			scene.heightProperty().addListener(
+			    new ChangeListener() {
+			    	@Override
+			        public void changed(ObservableValue observable, 
+			                            Object oldValue, Object newValue) {
+			            Double height = (Double)newValue;
+			            codeArea.setPrefHeight(height);
+			        }
+			    });
 		
 		stage.setScene(scene);
 		stage.show();

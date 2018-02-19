@@ -13,14 +13,14 @@
             stylesheets="@editorMainWindow.css"
             >
 
-	<VBox fx:id="vbox" layoutY="10.0" layoutX="10.0" styleClass="mainContainer" >
+	<VBox fx:id="vbox" layoutY="10.0" layoutX="10.0" styleClass="mainContainer">
 		<GridPane.margin>
          <Insets bottom="10.0" left="10.0" right ="10.0" top="10.0"/>
      	</GridPane.margin>
-	  	<HBox AnchorPane.leftAnchor="0.0" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
-	  		<MenuBar HBox.hgrow="ALWAYS" fx:id="mainMenuBar" prefWidth="1400.0">
-	  			<Menu text="File">
-	  				<MenuItem fx:id="saveItem" text="Save" onAction="#save" accelerator="Ctrl+S"/>
+	  	<HBox alignment="TOP_LEFT" VBox.vgrow="ALWAYS" styleClass="menuBarBox">
+	  		<MenuBar HBox.hgrow="ALWAYS" fx:id="mainMenuBar" prefWidth="1400.0" styleClass="mainWindowMenuBar">
+	  			<Menu text="File" styleClass="fileMenu">
+	  				<MenuItem fx:id="saveItem" text="Save" onAction="#save" accelerator="Ctrl+S" />
 	  				<MenuItem fx:id="loadItem" text="Load" onAction="#load" accelerator="Ctrl+L" />
 	  				<MenuItem fx:id="undoItem" text="Close" onAction="#close" accelerator="Ctrl+Alt+Q" />
 	  			</Menu>
@@ -30,8 +30,8 @@
 	  			</Menu>
       		</MenuBar>	
       	</HBox>
-      	<HBox fx:id="areasBox" AnchorPane.leftAnchor="0.0" VBox.vgrow="ALWAYS" styleClass="areasBox">
-      	<TreeView fx:id="fileViewer" prefHeight="800" prefWidth="300" layoutX="10.0"></TreeView>
+      	<HBox fx:id="areasBox"  VBox.vgrow="ALWAYS" styleClass="areasBox">
+      	<TreeView fx:id="fileViewer" prefHeight="600" prefWidth="500" layoutX="10.0"></TreeView>
       	</HBox>
 	</VBox>
 </GridPane>
