@@ -30,11 +30,8 @@
 	  			</Menu>
       		</MenuBar>	
       	</HBox>
-      	<HBox AnchorPane.leftAnchor="0.0" VBox.vgrow="ALWAYS" styleClass="areasBox">
+      	<HBox fx:id="areasBox" AnchorPane.leftAnchor="0.0" VBox.vgrow="ALWAYS" styleClass="areasBox">
       	<TreeView fx:id="fileViewer" prefHeight="800" prefWidth="300" layoutX="10.0"></TreeView>
-      	<TextArea fx:id="rowNumbers" id="rowNumbers" styleClass="rowNumbers" prefHeight="800" 
-      			prefWidth="50" layoutX="10.0" disable="true"></TextArea>
-      	<TextArea fx:id="codeText" prefHeight="800" ></TextArea>
       	</HBox>
 	</VBox>
 </GridPane>

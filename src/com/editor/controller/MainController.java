@@ -2,6 +2,9 @@ package com.editor.controller;
 
 import java.io.IOException;
 
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.StyledTextArea;
+
 import com.editor.service.FileOperationsService;
 
 import javafx.application.Platform;
@@ -10,25 +13,17 @@ import javafx.scene.control.TextArea;
 
 public class MainController {
 
-	@FXML
-	TextArea codeText;
-	
+	private CodeArea codeArea;
+
 	@FXML
 	TextArea rowNumbers;
-	
-	RowNumbersController rowNumbersController = new RowNumbersController();
 
 	FileOperationsService fileOperationsService = new FileOperationsService();
-	
-	@FXML
-    public void initialize() {
-		rowNumbersController.initialize(rowNumbers, codeText);
-    }
 
 	@FXML
 	public void save() {
 		try {
-			fileOperationsService.save(codeText);
+			fileOperationsService.save(codeArea);
 		} catch (IOException e) {
 			handleIOException("Error while saving file: ", e.getStackTrace());
 		}
@@ -37,7 +32,7 @@ public class MainController {
 	@FXML
 	public void load() {
 		try {
-			fileOperationsService.load(codeText);
+			fileOperationsService.load(codeArea);
 		} catch (IOException e) {
 			handleIOException("Error while loading file: ", e.getStackTrace());
 		}
@@ -50,6 +45,14 @@ public class MainController {
 
 	public void handleIOException(String message, StackTraceElement[] stackTraceElements) {
 		System.out.println(message + stackTraceElements.toString());
+	}
+
+	public CodeArea getCodeArea() {
+		return codeArea;
+	}
+
+	public void setCodeArea(CodeArea codeArea) {
+		this.codeArea = codeArea;
 	}
 
 }
