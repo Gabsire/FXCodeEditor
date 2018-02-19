@@ -1,11 +1,16 @@
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class CodeEditorApplication extends Application {
 
+	@FXML
+	TextArea rowNumbers;
+	
 	public static void main(String[] args) {
 		Application.launch(CodeEditorApplication.class, args);
 	}
@@ -14,9 +19,11 @@ public class CodeEditorApplication extends Application {
 	public void start(Stage stage) throws Exception {
 
 		Parent root = FXMLLoader.load(getClass().getResource("editorMainWindow.fxml"));
+       
 
 		stage.setTitle("FXCodeEditor");
-		stage.setScene(new Scene(root, 1000, 800));
+		Scene scene = new Scene(root, 1000, 800);
+		stage.setScene(scene);
 		stage.show();
 	}
 

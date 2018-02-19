@@ -11,14 +11,24 @@ import javafx.scene.control.TextArea;
 public class MainController {
 
 	@FXML
-	TextArea textArea;
+	TextArea codeText;
+	
+	@FXML
+	TextArea rowNumbers;
+	
+	RowNumbersController rowNumbersController = new RowNumbersController();
 
 	FileOperationsService fileOperationsService = new FileOperationsService();
+	
+	@FXML
+    public void initialize() {
+		rowNumbersController.initialize(rowNumbers, codeText);
+    }
 
 	@FXML
 	public void save() {
 		try {
-			fileOperationsService.save(textArea);
+			fileOperationsService.save(codeText);
 		} catch (IOException e) {
 			handleIOException("Error while saving file: ", e.getStackTrace());
 		}
@@ -27,7 +37,7 @@ public class MainController {
 	@FXML
 	public void load() {
 		try {
-			fileOperationsService.load(textArea);
+			fileOperationsService.load(codeText);
 		} catch (IOException e) {
 			handleIOException("Error while loading file: ", e.getStackTrace());
 		}
