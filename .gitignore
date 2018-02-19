@@ -1,3 +1,14 @@
 
-#Ignore binary files
+
 bin/
+target/
+*.class
+*.jar
+*.war
+*.earpng
+*.logs
+*.iml
+.idea/
+.eclipse
+*.png
+*.jpg

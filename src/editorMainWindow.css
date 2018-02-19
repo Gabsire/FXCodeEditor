@@ -1,0 +1,15 @@
+
+
+.mainPane .mainContainer .areasBox .rowNumbers{
+	-fx-background-color : #29B6F6;
+}
+
+.mainPane .mainContainer .areasBox .rowNumbers {
+	-fx-font-size: 16px;
+	-fx-text-fill : grey;
+}
+
+.mainPane .mainContainer .areasBox .codeText {
+	-fx-font-size: 16px;
+	-fx-text-fill : grey;
+}

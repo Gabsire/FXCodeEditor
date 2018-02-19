@@ -10,7 +10,7 @@ public class CodeEditorApplication extends Application {
 
 	@FXML
 	TextArea rowNumbers;
-	
+
 	public static void main(String[] args) {
 		Application.launch(CodeEditorApplication.class, args);
 	}
@@ -19,7 +19,6 @@ public class CodeEditorApplication extends Application {
 	public void start(Stage stage) throws Exception {
 
 		Parent root = FXMLLoader.load(getClass().getResource("editorMainWindow.fxml"));
-       
 
 		stage.setTitle("FXCodeEditor");
 		Scene scene = new Scene(root, 1000, 800);
