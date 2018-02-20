@@ -61,8 +61,11 @@ public class FileOperationsService {
 	private FileChooser initializeFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save file");
-		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
-		fileChooser.getExtensionFilters().add(extensionFilter);
+		FileChooser.ExtensionFilter extensionFilterHTML = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+		FileChooser.ExtensionFilter extensionFilterJava = new FileChooser.ExtensionFilter("JAVA files (*.java)", "*.java");
+
+		fileChooser.getExtensionFilters().add(extensionFilterHTML);
+		fileChooser.getExtensionFilters().add(extensionFilterJava);
 		return fileChooser;
 	}
 }
