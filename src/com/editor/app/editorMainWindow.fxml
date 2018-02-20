@@ -10,7 +10,7 @@
             fx:id="mainPane"
             styleClass="mainPane"
             fx:controller="com.editor.controller.MainController"
-            stylesheets="@editorMainWindow.css"
+            stylesheets="@../style/editorMainWindow.css"
             >
 
 	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer" styleClass="mainContainer">

@@ -1,3 +1,4 @@
+package com.editor.app;
 import java.awt.Insets;
 import java.util.Collection;
 import java.util.Collections;
@@ -110,7 +111,7 @@ public class CodeEditorApplication extends Application {
 				codeArea.setPrefHeight(height);
 			}
 		});
-        scene.getStylesheets().add(getClass().getResource("colorSyntax.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("../style/colorSyntax.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
