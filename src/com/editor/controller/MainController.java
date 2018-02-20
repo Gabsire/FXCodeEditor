@@ -3,7 +3,6 @@ package com.editor.controller;
 import java.io.IOException;
 
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.StyledTextArea;
 
 import com.editor.service.FileOperationsService;
 

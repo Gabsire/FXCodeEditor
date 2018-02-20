@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 
 import org.fxmisc.richtext.CodeArea;
 
-import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
 public class FileOperationsService {
