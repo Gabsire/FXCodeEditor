@@ -27,7 +27,6 @@
 				</Menu>
 				<Menu text="Edit">
 					<MenuItem text="Undo" accelerator="Ctrl+X" />
-					<MenuItem fx:id="searchItem" text="Search" accelerator="Ctrl+F" />
 				</Menu>
 			</MenuBar>
 		</HBox>

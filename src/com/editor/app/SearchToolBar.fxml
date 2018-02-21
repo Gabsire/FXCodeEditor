@@ -10,18 +10,17 @@
 <?import org.controlsfx.control.textfield.CustomTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 
-<ToolBar xmlns:fx="http://javafx.com/fxml"
-	fx:id="searchBar" styleClass="searchBar" fx:controller="com.editor.controller.SearchController"
-	stylesheets="@../style/SearchToolBar.css" >
+<ToolBar xmlns:fx="http://javafx.com/fxml" fx:id="searchBar" styleClass="searchBar" 
+	fx:controller="com.editor.controller.SearchController" stylesheets="@../style/SearchToolBar.css" >
 	<items>
-		<Button fx:id="closeSearchBtn" styleClass="closeSearchBtn">
+		<Button fx:id="closeSearchBtn" styleClass="closeSearchBtn" onAction="#close">
 			<graphic>
 				<FontAwesomeIconView styleClass="closeSearchBtnIcon" />
 			</graphic>
 		</Button>
 		<CustomTextField fx:id="searchField">
 			<left>
-				<Label styleClass="searchLabel">
+				<Label fx:id="searchLabel" styleClass="searchLabel">
 					<graphic>
 						<FontAwesomeIconView styleClass="searchBoxLabelIcon" />
 					</graphic>

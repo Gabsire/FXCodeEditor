@@ -30,7 +30,7 @@ public class MainController {
 	private CustomTextField searchField;
 	
 	@FXML
-	SearchController searchController;
+	SearchController searchController = new SearchController();
 
 	FileOperationsService fileOperationsService = new FileOperationsService();
 
@@ -67,6 +67,7 @@ public class MainController {
 
 	public void setCodeArea(CodeArea codeArea) {
 		this.codeArea = codeArea;
+		searchController.setCodeArea(codeArea);
 	}
 
 }
