@@ -1,11 +1,33 @@
 
 
-.mainPane {
-	-fx-background-color : purple;
+.mainPane .mainContainer {
+	-fx-background-color: linear-gradient(to left, #a770ef, #cf8bf3, #fdb99b);
 }
 
-.mainPane .mainContainer .menuBarBox .mainWindowMenuBar {
-	-fx-background-color : linear-gradient(to bottom, #e570e7 0%,#c85ec7 47%,#a849a3 100%);
-	-fx-font-size: 20;
-	-fx-text-fill: white;
+.closeSearchBtnIcon {
+    -glyph-size: 18;
+    -glyph-name: CLOSE;
+}
+
+.closeSearchBtn {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.itemsFoundLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 17;
+    -fx-margin:  10, 10, 10, 10;
+    -fx-padding: 10, 10, 10, 10;
+    -glyph-name: SEARCH;
+}
+
+.projectExplorer, #codeArea{
+	-fx-border-color: lightblue;
+    -fx-border-insets: -1;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 5;
 }

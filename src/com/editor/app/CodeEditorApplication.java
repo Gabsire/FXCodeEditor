@@ -50,6 +50,7 @@ public class CodeEditorApplication extends Application {
 
 		// initialize and attach code area to main controller
 		CodeArea codeArea = new CodeArea();
+		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
 
 		controller.setCodeArea(codeArea);
@@ -58,7 +59,6 @@ public class CodeEditorApplication extends Application {
 
 		// initialize container boxes
 		VBox mainContainerBox = (VBox) scene.lookup("#mainContainer");
-		mainContainerBox.setSpacing(30);
 
 		HBox areasBox = (HBox) scene.lookup("#areasBox");
 		areasBox.getChildren().add(codeArea);
