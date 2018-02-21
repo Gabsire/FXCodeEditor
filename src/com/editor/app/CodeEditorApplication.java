@@ -42,7 +42,7 @@ public class CodeEditorApplication extends Application {
 		// initialize stage and scene
 		stage.setTitle(Constants.STAGE_DEFAULT_TITLE);
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("editorMainWindow.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditorMainWindow.fxml"));
 		Parent root = (Parent) fxmlLoader.load();
 		MainController controller = fxmlLoader.<MainController>getController();
 
@@ -64,7 +64,7 @@ public class CodeEditorApplication extends Application {
 		areasBox.getChildren().add(codeArea);
 
 		applyColorSyntaxToArea(codeArea);
-		scene.getStylesheets().add(getClass().getResource("../style/colorSyntax.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
 		
 		stage.setScene(scene);
 		stage.show();

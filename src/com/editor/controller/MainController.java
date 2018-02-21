@@ -2,12 +2,15 @@ package com.editor.controller;
 
 import java.io.IOException;
 
+import org.controlsfx.control.textfield.CustomTextField;
 import org.fxmisc.richtext.CodeArea;
 
 import com.editor.service.FileOperationsService;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class MainController {
@@ -15,7 +18,19 @@ public class MainController {
 	private CodeArea codeArea;
 
 	@FXML
-	TextArea rowNumbers;
+	private TextArea rowNumbers;
+	
+	@FXML
+	private Button closeSearchBtn;
+	
+	@FXML
+	private Label itemsFoundLabel;
+	
+	@FXML
+	private CustomTextField searchField;
+	
+	@FXML
+	SearchController searchController;
 
 	FileOperationsService fileOperationsService = new FileOperationsService();
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?language JavaScript?>
 
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
@@ -13,10 +12,9 @@
 
 <GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
 	fx:id="mainPane" styleClass="mainPane" prefWidth="1300" prefHeight="900"
-	fx:controller="com.editor.controller.MainController" stylesheets="@../style/editorMainWindow.css">
+	fx:controller="com.editor.controller.MainController" stylesheets="@../style/EditorMainWindow.css">
 
-	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer"
-		styleClass="mainContainer">
+	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer" styleClass="mainContainer">
 		<HBox alignment="TOP_LEFT" VBox.vgrow="ALWAYS" styleClass="menuBarBox">
 			<MenuBar HBox.hgrow="ALWAYS" fx:id="mainMenuBar" styleClass="mainWindowMenuBar">
 				<Menu text="File" styleClass="fileMenu">
@@ -33,25 +31,7 @@
 				</Menu>
 			</MenuBar>
 		</HBox>
-		<ToolBar fx:id="searchBar" styleClass="searchBar">
-			<items>
-				<Button fx:id="closeSearchBtn" styleClass="closeSearchBtn" >
-					<graphic>
-						<FontAwesomeIconView styleClass="closeSearchBtnIcon" />
-					</graphic>
-				</Button>
-				<CustomTextField fx:id="searchField">
-					<left>
-						<Label styleClass="searchLabel">
-							<graphic>
-								<FontAwesomeIconView styleClass="searchBoxLabelIcon" />
-							</graphic>
-						</Label>
-					</left>
-				</CustomTextField>
-				<Label fx:id="itemsFoundLabel" />
-			</items>
-		</ToolBar>
+		<fx:include source="SearchToolBar.fxml"/>
 		<HBox VBox.vgrow="ALWAYS" fx:id="areasBox" styleClass="areasBox">
 			<VBox.margin>
 				<Insets>
