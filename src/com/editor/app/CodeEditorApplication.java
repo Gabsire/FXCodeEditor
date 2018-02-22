@@ -9,18 +9,22 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.StyleSpans;
 import org.fxmisc.richtext.StyleSpansBuilder;
+import org.fxmisc.richtext.TwoDimensional.Position;
 
 import com.editor.controller.MainController;
 import com.editor.utils.Constants;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,9 +32,10 @@ import javafx.stage.Stage;
 
 public class CodeEditorApplication extends Application {
 
-	
 	@FXML
 	TextArea rowNumbers;
+
+	int maxLineNumber = 0;
 
 	public static void main(String[] args) {
 		Application.launch(CodeEditorApplication.class, args);
@@ -52,6 +57,37 @@ public class CodeEditorApplication extends Application {
 		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
+		
+		
+
+		codeArea.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
+				Position position = getPositionFromCaret(codeArea);
+				int line = position.getMajor();
+				int character = position.getMinor();
+				++line;
+				
+				Label currentLineLabel = (Label) scene.lookup("#currentLineLabel");
+				Label lineTotalLabel = (Label) scene.lookup("#lineTotalLabel");
+				Label currentCharacterLabel = (Label) scene.lookup("#currentCharacterLabel");
+
+				currentLineLabel.setText("Current line: " + line);
+				currentCharacterLabel.setText("Current character: " + character);
+				
+				if (maxLineNumber < line) {
+					lineTotalLabel.setText("Total lines: " + line);
+					maxLineNumber = line;
+				}
+			}
+
+			private Position getPositionFromCaret(CodeArea codeArea) {
+				int offset = codeArea.getCaretPosition();
+				Position position = codeArea.offsetToPosition(offset, null);
+				return position;
+			}
+		});
 
 		controller.setCodeArea(codeArea);
 		initLineNumbers(codeArea);
@@ -65,7 +101,7 @@ public class CodeEditorApplication extends Application {
 
 		applyColorSyntaxToArea(codeArea);
 		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
-		
+
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -101,9 +137,9 @@ public class CodeEditorApplication extends Application {
 			codeArea.setPrefHeight(height);
 		});
 	}
-	
+
 	private void bindCodeAreaWidthToScene(CodeArea codeArea, Scene scene) {
-		
+
 		scene.widthProperty().addListener((ChangeListener<? super Number>) (observable, oldValue, newValue) -> {
 			Double width = (Double) newValue;
 			codeArea.setPrefWidth(width);
@@ -112,11 +148,11 @@ public class CodeEditorApplication extends Application {
 	}
 
 	public static StyleSpans<Collection<String>> computeHighlighting(String text) {
-		
+
 		Matcher matcher = Constants.PATTERN.matcher(text);
 		int fontDelimiter = 0;
 		StyleSpansBuilder<Collection<String>> styleSpansBuilder = new StyleSpansBuilder<>();
-		
+
 		while (matcher.find()) {
 			String styleClass = matcher.group("KEYWORD") != null ? "keyword"
 					: matcher.group("PAREN") != null ? "paren"

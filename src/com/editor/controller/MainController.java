@@ -38,7 +38,7 @@ public class MainController {
 	private Label searchLabel;
 
 	FileOperationsService fileOperationsService = new FileOperationsService();
-	
+
 	SearchService searchService = new SearchService();
 
 	@FXML
@@ -65,10 +65,10 @@ public class MainController {
 	}
 
 	@FXML
-	public void displaySearchBar(){
+	public void displaySearchBar() {
 		searchService.display(searchBar);
 	}
-	
+
 	@FXML
 	public void closeSearchBar() {
 		searchService.close(searchBar);
