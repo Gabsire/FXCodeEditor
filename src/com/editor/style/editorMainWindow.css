@@ -5,6 +5,26 @@
 	-fx-background-color: linear-gradient(to left, #a770ef, #cf8bf3, #fdb99b);
 }
 
+/* search bar */
+
+.closeSearchBtn {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.itemsFoundLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 17;
+    -glyph-name: SEARCH;
+}
+
+.closeSearchBtnIcon {
+    -glyph-size: 18;
+    -glyph-name: CLOSE;
+}
+
 /* areas */
 
 .projectExplorer, #codeArea{

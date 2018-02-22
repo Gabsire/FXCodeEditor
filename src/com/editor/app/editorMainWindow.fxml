@@ -14,7 +14,8 @@
 	fx:id="mainPane" styleClass="mainPane" prefWidth="1300" prefHeight="900"
 	fx:controller="com.editor.controller.MainController" stylesheets="@../style/EditorMainWindow.css">
 
-	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer" styleClass="mainContainer">
+	<VBox layoutY="10.0" layoutX="10.0" fx:id="mainContainer"
+		styleClass="mainContainer">
 		<HBox alignment="TOP_LEFT" VBox.vgrow="ALWAYS" styleClass="menuBarBox">
 			<MenuBar HBox.hgrow="ALWAYS" fx:id="mainMenuBar" styleClass="mainWindowMenuBar">
 				<Menu text="File" styleClass="fileMenu">
@@ -28,9 +29,31 @@
 				<Menu text="Edit">
 					<MenuItem text="Undo" accelerator="Ctrl+X" />
 				</Menu>
+				<Menu text="View" styleClass="viewMenu">
+					<MenuItem fx:id="viewSearchBar" text="Search Bar" onAction="#displaySearchBar" />
+				</Menu>
 			</MenuBar>
 		</HBox>
-		<fx:include source="SearchToolBar.fxml"/>
+		<ToolBar fx:id="searchBar" styleClass="searchBar">
+			<items>
+				<Button fx:id="closeSearchBtn" styleClass="closeSearchBtn"
+					onAction="#closeSearchBar">
+					<graphic>
+						<FontAwesomeIconView styleClass="closeSearchBtnIcon" />
+					</graphic>
+				</Button>
+				<CustomTextField fx:id="searchField">
+					<left>
+						<Label fx:id="searchLabel" styleClass="searchLabel">
+							<graphic>
+								<FontAwesomeIconView styleClass="searchBoxLabelIcon" />
+							</graphic>
+						</Label>
+					</left>
+				</CustomTextField>
+				<Label fx:id="itemsFoundLabel" />
+			</items>
+		</ToolBar>
 		<HBox VBox.vgrow="ALWAYS" fx:id="areasBox" styleClass="areasBox">
 			<VBox.margin>
 				<Insets>
