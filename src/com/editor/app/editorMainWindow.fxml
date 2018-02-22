@@ -30,7 +30,8 @@
 					<MenuItem text="Undo" accelerator="Ctrl+X" />
 				</Menu>
 				<Menu text="View" styleClass="viewMenu">
-					<MenuItem fx:id="viewSearchBar" text="Search Bar" onAction="#displaySearchBar" />
+					<MenuItem fx:id="viewSearchBar" text="Search Bar"
+						onAction="#displaySearchBar" />
 				</Menu>
 			</MenuBar>
 		</HBox>
@@ -59,11 +60,24 @@
 				<Insets>
 					<right>8</right>
 					<left>8</left>
-					<bottom>8</bottom>
 				</Insets>
 			</VBox.margin>
 			<TreeView prefHeight="600" prefWidth="500" layoutX="10.0"
 				fx:id="projectExplorer" styleClass="projectExplorer"></TreeView>
 		</HBox>
+		<ToolBar fx:id="searchBar" styleClass="informationBar">
+			<VBox.margin>
+				<Insets>
+					<right>8</right>
+					<left>8</left>
+					<bottom>8</bottom>
+				</Insets>
+			</VBox.margin>
+			<items>
+				<Label fx:id="lineTotalLabel" text="Total lines: 1"/>
+				<Label fx:id="currentLineLabel" text="Current line: 1"/>
+				<Label fx:id="currentCharacterLabel" text="Current character: 1"/>
+			</items>
+		</ToolBar>
 	</VBox>
 </GridPane>
