@@ -11,7 +11,9 @@ import org.fxmisc.richtext.StyleSpans;
 import org.fxmisc.richtext.StyleSpansBuilder;
 import org.fxmisc.richtext.TwoDimensional.Position;
 
+import com.editor.bean.DocumentManager;
 import com.editor.controller.MainController;
+import com.editor.persistance.PersistanceManager;
 import com.editor.utils.Constants;
 
 import javafx.application.Application;
@@ -57,25 +59,25 @@ public class CodeEditorApplication extends Application {
 		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
-		
-		
+		DocumentManager documentManager = PersistanceManager.load();
+		codeArea.replaceText(documentManager.getDocuments().get(0).getContent());
 
 		codeArea.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				
+
 				Position position = getPositionFromCaret(codeArea);
 				int line = position.getMajor();
 				int character = position.getMinor();
 				++line;
-				
+
 				Label currentLineLabel = (Label) scene.lookup("#currentLineLabel");
 				Label lineTotalLabel = (Label) scene.lookup("#lineTotalLabel");
 				Label currentCharacterLabel = (Label) scene.lookup("#currentCharacterLabel");
 
 				currentLineLabel.setText("Current line: " + line);
 				currentCharacterLabel.setText("Current character: " + character);
-				
+
 				if (maxLineNumber < line) {
 					lineTotalLabel.setText("Total lines: " + line);
 					maxLineNumber = line;

@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 
 import org.fxmisc.richtext.CodeArea;
 
+import com.editor.persistance.PersistanceManager;
+
 import javafx.stage.FileChooser;
 
 public class FileOperationsService {
@@ -34,6 +36,7 @@ public class FileOperationsService {
 					e.printStackTrace();
 				}
 			});
+			PersistanceManager.save(file.getPath());
 			reader.close();
 			writer.close();
 			return true;
