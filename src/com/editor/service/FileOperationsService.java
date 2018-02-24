@@ -43,13 +43,17 @@ public class FileOperationsService {
 			});
 			
 			Document document = new Document(file.getName(), file.getPath(), content.toString());
-			documentManager.getDocuments().add(document);
-			documentManager.setCurrentOpenIndex(documentManager.getDocuments().indexOf(document));
-			reader.close();
+			appendDocumentToManager(document);
+			reader.close();	
 			writer.close();
 			return true;
 		}
 		return false;
+	}
+
+	public void appendDocumentToManager(Document document) {
+		documentManager.getDocuments().add(document);
+		documentManager.setCurrentOpenIndex(documentManager.getDocuments().indexOf(document));
 	}
 
 	public Boolean load(CodeArea codeArea) throws IOException {
@@ -68,7 +72,8 @@ public class FileOperationsService {
 		return false;
 	}
 
-	private FileChooser initializeFileChooser() {
+	public FileChooser initializeFileChooser() {
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save file");
 		FileChooser.ExtensionFilter extensionFilterHTML = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");

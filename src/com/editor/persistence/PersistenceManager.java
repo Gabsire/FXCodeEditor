@@ -12,22 +12,21 @@ import java.util.List;
 
 import com.editor.bean.Document;
 import com.editor.bean.DocumentManager;
+import com.editor.utils.Constants;
 
 public class PersistenceManager {
 
-	public static final String FILE_PATH = "data/persistence.dat";
 	private static DocumentManager documentManager = DocumentManager.getInstance();
 
 	public static void save() throws IOException {
-		System.out.println("chocolat");
+
 		File file = getPersistenceFile();
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
 		List<Document> documents = documentManager.getDocuments();
-		System.out.println(documentManager.getCurrentOpenIndex() + "polo");
-		writer.write(documentManager.getCurrentOpenIndex() + "\n");
+		writer.write(documentManager.getCurrentOpenIndex() + Constants.NEWLINE);
 
 		for (Document document : documents) {
-			writer.write(document.getFilePath() + "\n");
+			writer.write(document.getFilePath() + Constants.NEWLINE);
 		}
 		writer.close();
 	}
@@ -36,25 +35,24 @@ public class PersistenceManager {
 
 		boolean firstLine = true;
 		BufferedReader reader = Files.newBufferedReader(getPersistenceFile().toPath(), StandardCharsets.UTF_8);
-		String line = reader.readLine();
+		String line = reader.readLine().trim();
 
-		while (null != line && !"".equals(line.trim())) {
+		while (null != line && (!line.isEmpty())) {
 
 			if (firstLine) {
+				// line contains index
 				int index = Integer.parseInt(line);
 				documentManager.setCurrentOpenIndex(index);
 				firstLine = false;
 			} else {
+				// line contains file path
 				StringBuilder content = new StringBuilder();
-				String filePath = line;
-				BufferedReader documentReader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8);
-				documentReader.lines().forEach(s -> content.append(s).append("\n"));
+				BufferedReader documentReader = Files.newBufferedReader(Paths.get(line), StandardCharsets.UTF_8);
+				documentReader.lines().forEach(s -> content.append(s).append(Constants.NEWLINE));
 
-				String fileName = filePath.trim().substring(filePath.lastIndexOf("\\"), filePath.length());
-
-				Document document = new Document(fileName, filePath, content.toString());
+				String fileName = getFileNameFromPath(line);
+				Document document = new Document(fileName, line, content.toString());
 				documentManager.getDocuments().add(document);
-
 			}
 			line = reader.readLine();
 		}
@@ -62,13 +60,23 @@ public class PersistenceManager {
 		return documentManager;
 	}
 
-	private static File getPersistenceFile() throws IOException {
+	public static String getFileNameFromPath(String filePath) {
 
-		File file = new File(FILE_PATH);
+		String fileName;
+		if (filePath.contains(Constants.PATH_SEPARATOR)) {
+			fileName = filePath.substring(filePath.lastIndexOf(Constants.PATH_SEPARATOR)+1, filePath.length());
+		} else {
+			fileName = filePath;
+		}
+		return fileName;
+	}
+
+	public static File getPersistenceFile() throws IOException {
+
+		File file = new File(Constants.PERSISTENCE_FILE_PATH);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
 		return file;
 	}
-
 }

@@ -55,6 +55,8 @@
 				<Label fx:id="itemsFoundLabel" />
 			</items>
 		</ToolBar>
+		<HBox fx:id="fileNamesBox">
+		</HBox>
 		<HBox VBox.vgrow="ALWAYS" fx:id="areasBox" styleClass="areasBox">
 			<VBox.margin>
 				<Insets>

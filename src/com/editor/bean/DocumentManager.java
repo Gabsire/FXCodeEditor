@@ -5,8 +5,8 @@ import java.util.List;
 
 public class DocumentManager {
 
-	private List<Document> documents = new ArrayList<>();
 	private static DocumentManager documentManager;
+	private List<Document> documents = new ArrayList<>();
 	private int currentOpenIndex;
 
 	public static DocumentManager getInstance() {

@@ -2,6 +2,7 @@ package com.editor.app;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 
@@ -11,6 +12,7 @@ import org.fxmisc.richtext.StyleSpans;
 import org.fxmisc.richtext.StyleSpansBuilder;
 import org.fxmisc.richtext.TwoDimensional.Position;
 
+import com.editor.bean.Document;
 import com.editor.bean.DocumentManager;
 import com.editor.controller.MainController;
 import com.editor.persistence.PersistenceManager;
@@ -22,6 +24,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -60,8 +63,24 @@ public class CodeEditorApplication extends Application {
 		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
+		
+		HBox fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
+		fileNamesBox.setSpacing(2);
 		DocumentManager documentManager = PersistenceManager.load();
-		if(-1 != documentManager.getCurrentOpenIndex() && !documentManager.getDocuments().isEmpty()){
+		List<Document> documents = documentManager.getDocuments();
+		
+		if(!documents.isEmpty()){
+			
+			for(int i = 0; i < documents.size(); i++){
+				Label fileName = new Label();
+				fileName.getStyleClass().add("filenames");
+				
+				if(documentManager.getCurrentOpenIndex() == i){
+					fileName.getStyleClass().add("selectedFilename");
+				}
+				fileName.setText(documents.get(i).getFileName());
+				fileNamesBox.getChildren().add(fileName);
+			}
 			codeArea.replaceText(documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
 		}
 

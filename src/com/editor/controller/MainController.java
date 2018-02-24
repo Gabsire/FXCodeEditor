@@ -47,7 +47,7 @@ public class MainController {
 		try {
 			fileOperationsService.save(codeArea);
 		} catch (IOException e) {
-			handleIOException("Error while saving file: ", e.getStackTrace());
+			handleIOException("Error while saving file: ", e);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class MainController {
 		try {
 			fileOperationsService.load(codeArea);
 		} catch (IOException e) {
-			handleIOException("Error while loading file: ", e.getStackTrace());
+			handleIOException("Error while loading file: ", e);
 		}
 	}
 
@@ -65,8 +65,8 @@ public class MainController {
 		try {
 			PersistenceManager.save();
 			Platform.exit();
-		} catch (Exception e) {
-			handleIOException("Error while closing editor: ", e.getStackTrace());
+		} catch (IOException e) {
+			handleIOException("Error while closing editor: ", e);
 		}
 	}
 
@@ -80,8 +80,8 @@ public class MainController {
 		searchService.close(searchBar);
 	}
 
-	public void handleIOException(String message, StackTraceElement[] stackTraceElements) {
-		System.out.println(message + stackTraceElements.toString());
+	public void handleIOException(String message, IOException exception) {
+		System.out.println(message + exception.getStackTrace());
 	}
 
 	public CodeArea getCodeArea() {
