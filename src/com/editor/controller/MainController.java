@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.fxmisc.richtext.CodeArea;
 
+import com.editor.persistence.PersistenceManager;
 import com.editor.service.FileOperationsService;
 import com.editor.service.SearchService;
 
@@ -61,7 +62,12 @@ public class MainController {
 
 	@FXML
 	public void close() {
-		Platform.exit();
+		try {
+			PersistenceManager.save();
+			Platform.exit();
+		} catch (Exception e) {
+			handleIOException("Error while closing editor: ", e.getStackTrace());
+		}
 	}
 
 	@FXML

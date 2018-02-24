@@ -5,14 +5,9 @@ import java.util.List;
 
 public class DocumentManager {
 
-	private List<Document> documents;
+	private List<Document> documents = new ArrayList<>();
 	private static DocumentManager documentManager;
 	private int currentOpenIndex;
-
-	private DocumentManager() {
-		documents = new ArrayList<>();
-		currentOpenIndex = 0;
-	}
 
 	public static DocumentManager getInstance() {
 
@@ -44,6 +39,11 @@ public class DocumentManager {
 
 	public void setCurrentOpenIndex(int currentOpenIndex) {
 		this.currentOpenIndex = currentOpenIndex;
+	}
+
+	@Override
+	public String toString() {
+		return "DocumentManager [documents=" + documents + ", currentOpenIndex=" + currentOpenIndex + "]";
 	}
 
 }

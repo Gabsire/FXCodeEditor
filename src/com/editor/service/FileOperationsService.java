@@ -12,12 +12,15 @@ import java.nio.file.Paths;
 
 import org.fxmisc.richtext.CodeArea;
 
-import com.editor.persistance.PersistanceManager;
+import com.editor.bean.Document;
+import com.editor.bean.DocumentManager;
 
 import javafx.stage.FileChooser;
 
 public class FileOperationsService {
 
+	DocumentManager documentManager = DocumentManager.getInstance();
+	
 	public Boolean save(CodeArea codeArea) throws IOException {
 
 		FileChooser fileChooser = initializeFileChooser();
@@ -26,17 +29,22 @@ public class FileOperationsService {
 		if (null != codeArea && null != file) {
 
 			BufferedReader reader = new BufferedReader(new StringReader(codeArea.getText()));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+			StringBuilder content = new StringBuilder();
+			
 			reader.lines().forEach(s -> {
 				try {
+					content.append(s);
 					writer.write(s);
 					writer.newLine();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			});
-			PersistanceManager.save(file.getPath());
+			
+			Document document = new Document(file.getName(), file.getPath(), content.toString());
+			documentManager.getDocuments().add(document);
+			documentManager.setCurrentOpenIndex(documentManager.getDocuments().indexOf(document));
 			reader.close();
 			writer.close();
 			return true;

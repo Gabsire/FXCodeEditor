@@ -13,16 +13,16 @@ import org.fxmisc.richtext.TwoDimensional.Position;
 
 import com.editor.bean.DocumentManager;
 import com.editor.controller.MainController;
-import com.editor.persistance.PersistanceManager;
+import com.editor.persistence.PersistenceManager;
 import com.editor.utils.Constants;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +31,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class CodeEditorApplication extends Application {
 
@@ -59,8 +60,10 @@ public class CodeEditorApplication extends Application {
 		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
-		DocumentManager documentManager = PersistanceManager.load();
-		codeArea.replaceText(documentManager.getDocuments().get(0).getContent());
+		DocumentManager documentManager = PersistenceManager.load();
+		if(-1 != documentManager.getCurrentOpenIndex() && !documentManager.getDocuments().isEmpty()){
+			codeArea.replaceText(documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
+		}
 
 		codeArea.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -90,7 +93,7 @@ public class CodeEditorApplication extends Application {
 				return position;
 			}
 		});
-
+		
 		controller.setCodeArea(codeArea);
 		initLineNumbers(codeArea);
 		bindCodeAreaDimensionToScene(codeArea, scene);
@@ -105,11 +108,16 @@ public class CodeEditorApplication extends Application {
 		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
 
 		stage.setScene(scene);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) {
+	              controller.close();
+	          }
+	      });   
 		stage.show();
 	}
 
 	public void applyColorSyntaxToArea(CodeArea codeArea) {
-		codeArea.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())) // XXX
+		codeArea.richChanges().filter(character -> !character.getInserted().equals(character.getRemoved())) // XXX
 				.subscribe(change -> {
 					codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
 				});
