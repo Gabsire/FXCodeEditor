@@ -72,43 +72,56 @@ public class CodeEditorApplication extends Application {
 
 		if (!documents.isEmpty()) {
 
-			for (int i = 0; i < documents.size(); i++) {
+			for (int i = 0; i < documents.size() + 1; i++) {
 
 				Label fileName = new Label();
-				fileName.setId("filename" + i);
+
+				if (documents.size() == i) {
+					fileName.setId("newtab");
+					fileName.setText("New Tab");
+
+				} else {
+					fileName.setId("filename" + i);
+					fileName.setText(documents.get(i).getFileName());
+				}
+
 				fileName.getStyleClass().add("filenames");
 				fileNames.add(fileName);
 
 				if (documentManager.getCurrentOpenIndex() == i) {
 					fileName.getStyleClass().add("selectedFilename");
 				}
-				fileName.setText(documents.get(i).getFileName());
+
 				fileNamesBox.getChildren().add(fileName);
-
-				//select file name tab
-				fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-
-						if (!fileName.getStyleClass().contains("selectedFilename")) {
-							fileNames.forEach(filename -> filename.getStyleClass().remove("selectedFilename"));
-							selectFileNameLabel(fileName);
-						}
-					}
-
-					private void selectFileNameLabel(Label fileName) {
-
-						int fileNameIndex = Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
-						Document document = documentManager.getDocuments().get(fileNameIndex);
-						codeArea.replaceText(document.getContent());
-						fileName.getStyleClass().add("selectedFilename");
-					}
-				});
+				handleFileNameMouseClick(codeArea, documentManager, fileNames, fileName);
 			}
 			codeArea.replaceText(
 					documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
 		}
 
+		handleCodeAreaChange(scene, codeArea);
+
+		controller.setCodeArea(codeArea);
+		initLineNumbers(codeArea);
+		bindCodeAreaDimensionToScene(codeArea, scene);
+
+		// initialize container boxes
+		HBox areasBox = (HBox) scene.lookup("#areasBox");
+		areasBox.getChildren().add(codeArea);
+
+		applyColorSyntaxToArea(codeArea);
+		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
+
+		stage.setScene(scene);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent we) {
+				controller.close();
+			}
+		});
+		stage.show();
+	}
+
+	private void handleCodeAreaChange(Scene scene, CodeArea codeArea) {
 		codeArea.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -137,25 +150,6 @@ public class CodeEditorApplication extends Application {
 				return position;
 			}
 		});
-
-		controller.setCodeArea(codeArea);
-		initLineNumbers(codeArea);
-		bindCodeAreaDimensionToScene(codeArea, scene);
-
-		// initialize container boxes
-		HBox areasBox = (HBox) scene.lookup("#areasBox");
-		areasBox.getChildren().add(codeArea);
-
-		applyColorSyntaxToArea(codeArea);
-		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
-
-		stage.setScene(scene);
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent we) {
-				controller.close();
-			}
-		});
-		stage.show();
 	}
 
 	public void applyColorSyntaxToArea(CodeArea codeArea) {
@@ -219,6 +213,37 @@ public class CodeEditorApplication extends Application {
 		}
 		styleSpansBuilder.add(Collections.emptyList(), text.length() - fontDelimiter);
 		return styleSpansBuilder.create();
+	}
+
+	private void handleFileNameMouseClick(CodeArea codeArea, DocumentManager documentManager, List<Label> fileNames,
+			Label fileName) {
+		fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+
+				if (!fileName.getStyleClass().contains("selectedFilename")) {
+					fileNames.forEach(filename -> filename.getStyleClass().remove("selectedFilename"));
+					selectFileNameLabel(fileName);
+				}
+			}
+
+			private void selectFileNameLabel(Label fileName) {
+
+				int fileNameIndex = getFileNameIndex(fileName);
+				displayDocumentContent(fileNameIndex);
+				fileName.getStyleClass().add("selectedFilename");
+			}
+
+			private void displayDocumentContent(int fileNameIndex) {
+				Document document = documentManager.getDocuments().get(fileNameIndex);
+				codeArea.replaceText(document.getContent());
+			}
+
+			private int getFileNameIndex(Label fileName) {
+				int fileNameIndex = Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
+				return fileNameIndex;
+			}
+		});
 	}
 
 }
