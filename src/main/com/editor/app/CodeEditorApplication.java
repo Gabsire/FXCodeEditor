@@ -18,12 +18,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -63,6 +65,8 @@ public class CodeEditorApplication extends Application {
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
 		
 		HBox fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
+		TreeView treeview = (TreeView) scene.lookup("#projectExplorer");
+		VBox.setMargin(fileNamesBox, new Insets(5,1,1, treeview.getPrefWidth()/2));
 		fileNamesBox.setSpacing(2);
 		DocumentManager documentManager = PersistenceManager.loadDocuments();
 		List<Document> documents = documentManager.getDocuments();
@@ -71,6 +75,7 @@ public class CodeEditorApplication extends Application {
 			
 			for(int i = 0; i < documents.size(); i++){
 				Label fileName = new Label();
+				fileName.setId("filename" + i);
 				fileName.getStyleClass().add("filenames");
 				
 				if(documentManager.getCurrentOpenIndex() == i){

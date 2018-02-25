@@ -67,7 +67,7 @@
 			<TreeView prefHeight="600" prefWidth="500" layoutX="10.0"
 				fx:id="projectExplorer" styleClass="projectExplorer"></TreeView>
 		</HBox>
-		<ToolBar fx:id="searchBar" styleClass="informationBar">
+		<ToolBar fx:id="informationBar" styleClass="informationBar">
 			<VBox.margin>
 				<Insets>
 					<right>8</right>
