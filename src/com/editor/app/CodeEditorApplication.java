@@ -24,7 +24,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -66,7 +65,7 @@ public class CodeEditorApplication extends Application {
 		
 		HBox fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
 		fileNamesBox.setSpacing(2);
-		DocumentManager documentManager = PersistenceManager.load();
+		DocumentManager documentManager = PersistenceManager.loadDocuments();
 		List<Document> documents = documentManager.getDocuments();
 		
 		if(!documents.isEmpty()){

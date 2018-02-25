@@ -44,30 +44,18 @@ public class MainController {
 
 	@FXML
 	public void save() {
-		try {
-			fileOperationsService.save(codeArea);
-		} catch (IOException e) {
-			handleIOException("Error while saving file: ", e);
-		}
+		fileOperationsService.save(codeArea);
 	}
 
 	@FXML
 	public void load() {
-		try {
-			fileOperationsService.load(codeArea);
-		} catch (IOException e) {
-			handleIOException("Error while loading file: ", e);
-		}
+		fileOperationsService.load(codeArea);
 	}
 
 	@FXML
 	public void close() {
-		try {
-			PersistenceManager.save();
-			Platform.exit();
-		} catch (IOException e) {
-			handleIOException("Error while closing editor: ", e);
-		}
+		PersistenceManager.saveDocuments();
+		Platform.exit();
 	}
 
 	@FXML
