@@ -28,7 +28,6 @@ public class PersistenceManager {
 
 			writer.write(documentManager.getCurrentOpenIndex() + Constants.NEWLINE);
 			writeDocumentPathsToPersistenceFile(writer);
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
