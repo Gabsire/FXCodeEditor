@@ -7,7 +7,7 @@ public class Constants {
 	public static final String NEWLINE = "\n";
 	public static final String PATH_SEPARATOR = "\\";
 
-	public static final String PERSISTENCE_FILE_PATH = "data/persistence.dat";
+	public static final String PERSISTENCE_FILE_PATH = "data\\persistence.dat";
 
 	public static final String[] KEYWORDS = new String[] { "abstract", "assert", "boolean", "break", "byte", "case",
 			"catch", "char", "class", "const", "continue", "default", "do", "double", "else", "enum", "extends",

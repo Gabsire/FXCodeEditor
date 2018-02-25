@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import main.com.editor.bean.DocumentManager;
 import main.com.editor.persistence.PersistenceManager;
+import main.com.editor.utils.Constants;
 
 public class PersistenceManagerTest {
 
@@ -47,6 +48,14 @@ public class PersistenceManagerTest {
 		assertThat(documentManager.getDocuments().size()).isEqualTo(linesOfPersistenceFile.size()-1);
 		assertThat(documentManager.getDocuments()).isNotEmpty();
 		assertThat(documentManager.getDocuments().get(0).getFilePath()).isEqualTo(linesOfPersistenceFile.get(1));
+	}
+	
+	@Test
+	public void testGetPersistenceFile(){
+		File file = PersistenceManager.getPersistenceFile();
+		assertThat(file).isNotNull();
+		assertThat(file.getPath()).isEqualTo(Constants.PERSISTENCE_FILE_PATH);
+		assertThat(file.exists()).isTrue();
 	}
 	
 	
