@@ -1,5 +1,6 @@
 package main.com.editor.app;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,6 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,8 +24,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -37,9 +37,6 @@ import main.com.editor.persistence.PersistenceManager;
 import main.com.editor.utils.Constants;
 
 public class CodeEditorApplication extends Application {
-
-	@FXML
-	TextArea rowNumbers;
 
 	int maxLineNumber = 0;
 
@@ -63,28 +60,53 @@ public class CodeEditorApplication extends Application {
 		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
-		
+
+		// file name tabs for each document above code area
 		HBox fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
 		TreeView treeview = (TreeView) scene.lookup("#projectExplorer");
-		VBox.setMargin(fileNamesBox, new Insets(5,1,1, treeview.getPrefWidth()/2));
+		VBox.setMargin(fileNamesBox, new Insets(5, 1, 1, treeview.getPrefWidth() / 2));
 		fileNamesBox.setSpacing(2);
 		DocumentManager documentManager = PersistenceManager.loadDocuments();
 		List<Document> documents = documentManager.getDocuments();
-		
-		if(!documents.isEmpty()){
-			
-			for(int i = 0; i < documents.size(); i++){
+		List<Label> fileNames = new ArrayList<>();
+
+		if (!documents.isEmpty()) {
+
+			for (int i = 0; i < documents.size(); i++) {
+
 				Label fileName = new Label();
 				fileName.setId("filename" + i);
 				fileName.getStyleClass().add("filenames");
-				
-				if(documentManager.getCurrentOpenIndex() == i){
+				fileNames.add(fileName);
+
+				if (documentManager.getCurrentOpenIndex() == i) {
 					fileName.getStyleClass().add("selectedFilename");
 				}
 				fileName.setText(documents.get(i).getFileName());
 				fileNamesBox.getChildren().add(fileName);
+
+				//select file name tab
+				fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+
+						if (!fileName.getStyleClass().contains("selectedFilename")) {
+							fileNames.forEach(filename -> filename.getStyleClass().remove("selectedFilename"));
+							selectFileNameLabel(fileName);
+						}
+					}
+
+					private void selectFileNameLabel(Label fileName) {
+
+						int fileNameIndex = Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
+						Document document = documentManager.getDocuments().get(fileNameIndex);
+						codeArea.replaceText(document.getContent());
+						fileName.getStyleClass().add("selectedFilename");
+					}
+				});
 			}
-			codeArea.replaceText(documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
+			codeArea.replaceText(
+					documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
 		}
 
 		codeArea.textProperty().addListener(new ChangeListener<String>() {
@@ -115,14 +137,12 @@ public class CodeEditorApplication extends Application {
 				return position;
 			}
 		});
-		
+
 		controller.setCodeArea(codeArea);
 		initLineNumbers(codeArea);
 		bindCodeAreaDimensionToScene(codeArea, scene);
 
 		// initialize container boxes
-		VBox mainContainerBox = (VBox) scene.lookup("#mainContainer");
-
 		HBox areasBox = (HBox) scene.lookup("#areasBox");
 		areasBox.getChildren().add(codeArea);
 
@@ -131,10 +151,10 @@ public class CodeEditorApplication extends Application {
 
 		stage.setScene(scene);
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	          public void handle(WindowEvent we) {
-	              controller.close();
-	          }
-	      });   
+			public void handle(WindowEvent we) {
+				controller.close();
+			}
+		});
 		stage.show();
 	}
 
