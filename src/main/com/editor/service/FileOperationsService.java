@@ -20,7 +20,7 @@ public class FileOperationsService {
 
 	public DocumentManager save(CodeArea codeArea) {
 
-		FileChooser fileChooser = initializeFileChooser();
+		FileChooser fileChooser = initializeFileChooser("Save file");
 		File file = fileChooser.showSaveDialog(null);
 
 		if (Utils.areNotNull(codeArea, file)) {
@@ -37,7 +37,7 @@ public class FileOperationsService {
 
 	public CodeArea load(CodeArea codeArea) {
 
-		FileChooser fileChooser = initializeFileChooser();
+		FileChooser fileChooser = initializeFileChooser("Open file");
 		File file = fileChooser.showOpenDialog(null);
 
 		if (Utils.areNotNull(codeArea, file)) {
@@ -51,10 +51,10 @@ public class FileOperationsService {
 		return codeArea;
 	}
 
-	public FileChooser initializeFileChooser() {
+	public FileChooser initializeFileChooser(String title) {
 
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save file");
+		fileChooser.setTitle(title);
 		FileChooser.ExtensionFilter extensionFilterHTML = new FileChooser.ExtensionFilter("HTML files (*.html)",
 				"*.html");
 		FileChooser.ExtensionFilter extensionFilterJava = new FileChooser.ExtensionFilter("JAVA files (*.java)",
