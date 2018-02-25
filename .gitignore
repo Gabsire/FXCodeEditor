@@ -12,3 +12,5 @@ target/
 .eclipse
 *.png
 *.jpg
+data/
+*.dat
