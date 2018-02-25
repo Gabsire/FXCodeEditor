@@ -1,7 +1,7 @@
 package test.com.editor.persistence;
 
-import org.junit.After;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
