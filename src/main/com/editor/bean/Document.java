@@ -1,4 +1,4 @@
-package com.editor.bean;
+package main.com.editor.bean;
 
 public class Document {
 

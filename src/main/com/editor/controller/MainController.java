@@ -1,13 +1,9 @@
-package com.editor.controller;
+package main.com.editor.controller;
 
 import java.io.IOException;
 
 import org.controlsfx.control.textfield.CustomTextField;
 import org.fxmisc.richtext.CodeArea;
-
-import com.editor.persistence.PersistenceManager;
-import com.editor.service.FileOperationsService;
-import com.editor.service.SearchService;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
+import main.com.editor.persistence.PersistenceManager;
+import main.com.editor.service.FileOperationsService;
+import main.com.editor.service.SearchService;
 
 public class MainController {
 

@@ -1,4 +1,4 @@
-package com.editor.app;
+package main.com.editor.app;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,12 +11,6 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.StyleSpans;
 import org.fxmisc.richtext.StyleSpansBuilder;
 import org.fxmisc.richtext.TwoDimensional.Position;
-
-import com.editor.bean.Document;
-import com.editor.bean.DocumentManager;
-import com.editor.controller.MainController;
-import com.editor.persistence.PersistenceManager;
-import com.editor.utils.Constants;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -34,6 +28,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.com.editor.bean.Document;
+import main.com.editor.bean.DocumentManager;
+import main.com.editor.controller.MainController;
+import main.com.editor.persistence.PersistenceManager;
+import main.com.editor.utils.Constants;
 
 public class CodeEditorApplication extends Application {
 

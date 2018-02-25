@@ -1,4 +1,4 @@
-package com.editor.persistence;
+package main.com.editor.persistence;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,10 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.editor.bean.Document;
-import com.editor.bean.DocumentManager;
-import com.editor.utils.Constants;
-import com.editor.utils.Utils;
+import main.com.editor.bean.Document;
+import main.com.editor.bean.DocumentManager;
+import main.com.editor.utils.Constants;
+import main.com.editor.utils.Utils;
 
 public class PersistenceManager {
 
@@ -59,7 +59,10 @@ public class PersistenceManager {
 					List<String> contentAsList = Files.readAllLines(path, StandardCharsets.UTF_8);
 					Document document = new Document(file.getName(), file.getAbsolutePath(),
 							String.join(Constants.NEWLINE, contentAsList));
-					documentManager.getDocuments().add(document);
+					
+					if(!documentManager.getDocuments().contains(document)){
+						documentManager.getDocuments().add(document);
+					}
 				}
 				line = reader.readLine();
 			}

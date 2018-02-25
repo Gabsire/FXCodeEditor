@@ -1,4 +1,4 @@
-package com.editor.service;
+package main.com.editor.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +9,10 @@ import java.util.List;
 
 import org.fxmisc.richtext.CodeArea;
 
-import com.editor.bean.Document;
-import com.editor.bean.DocumentManager;
-import com.editor.utils.Utils;
-
 import javafx.stage.FileChooser;
+import main.com.editor.bean.Document;
+import main.com.editor.bean.DocumentManager;
+import main.com.editor.utils.Utils;
 
 public class FileOperationsService {
 

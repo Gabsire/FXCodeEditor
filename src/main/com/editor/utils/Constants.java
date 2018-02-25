@@ -1,4 +1,4 @@
-package com.editor.utils;
+package main.com.editor.utils;
 
 import java.util.regex.Pattern;
 
