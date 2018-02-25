@@ -28,31 +28,29 @@ public class FileOperationsServiceTest {
 	@Rule public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
 	FileOperationsService fileOperationsService = new FileOperationsService();
 	CodeArea codeArea;
+	File file;
 	
 	@Before
 	public void setUp() throws Exception{
 		codeArea = new CodeArea();
+		file = new File("./data/Kitty.txt");
 		codeArea.replaceText("Hello");
 	}
 	
 	@After
 	public void tearDown(){
 		codeArea = null;
+		file = null;
 	}
 	
 	@Test
-	@Ignore
 	public void testSave(){
-		DocumentManager documentManager = fileOperationsService.save(codeArea);
-		assertThatCode(() -> { fileOperationsService.save(codeArea); }).doesNotThrowAnyException();
-		assertThat(documentManager.getInstance().getDocuments()).isNotEmpty();
+		assertThat(fileOperationsService.save(codeArea)).isTrue();
 	}
 	
 	@Test
-	@Ignore
 	public void testLoad(){
-		codeArea = fileOperationsService.load(codeArea);
-		assertThatCode(() -> { fileOperationsService.load(codeArea); }).doesNotThrowAnyException();
+		assertThat(fileOperationsService.load(codeArea)).isTrue();
 		assertThat(codeArea.getText()).isNotNull();
 		assertThat(codeArea.getText()).isNotEmpty();
 	}
@@ -64,6 +62,14 @@ public class FileOperationsServiceTest {
 		assertThat(fileChooser.getExtensionFilters()).isNotEmpty();
 		assertThat(fileChooser.getTitle()).isEqualTo("Save file");
 	}
+	
+	@Test
+	public void testCopyCodeAreaContentToFile(){
+		assertThatCode(() -> { fileOperationsService.copyCodeAreaContentToFile(codeArea, file); })
+						.doesNotThrowAnyException();
+	}
+	
+
 
 }
 

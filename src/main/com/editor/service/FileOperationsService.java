@@ -18,7 +18,7 @@ public class FileOperationsService {
 
 	DocumentManager documentManager = DocumentManager.getInstance();
 
-	public DocumentManager save(CodeArea codeArea) {
+	public Boolean save(CodeArea codeArea) {
 
 		FileChooser fileChooser = initializeFileChooser("Save file");
 		File file = fileChooser.showSaveDialog(null);
@@ -27,15 +27,16 @@ public class FileOperationsService {
 
 			try {
 				copyCodeAreaContentToFile(codeArea, file);
-				appendNewDocumentToManager(file);			
+				appendNewDocumentToManager(file);
+				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return documentManager;
+		return false;
 	}
 
-	public CodeArea load(CodeArea codeArea) {
+	public Boolean load(CodeArea codeArea) {
 
 		FileChooser fileChooser = initializeFileChooser("Open file");
 		File file = fileChooser.showOpenDialog(null);
@@ -44,11 +45,12 @@ public class FileOperationsService {
 
 			try {
 				copyFileContentToCodeArea(codeArea, file);
+				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return codeArea;
+		return false;
 	}
 
 	public FileChooser initializeFileChooser(String title) {
