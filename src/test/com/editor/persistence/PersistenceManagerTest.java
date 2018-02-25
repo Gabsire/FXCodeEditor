@@ -41,7 +41,13 @@ public class PersistenceManagerTest {
 		assertThatCode(() -> { PersistenceManager.saveDocuments(); }).doesNotThrowAnyException();
 	}
 	
-	
+	@Test
+	public void testLoadDocuments(){
+		DocumentManager documentManager = PersistenceManager.loadDocuments();
+		assertThat(documentManager.getDocuments().size()).isEqualTo(linesOfPersistenceFile.size()-1);
+		assertThat(documentManager.getDocuments()).isNotEmpty();
+		assertThat(documentManager.getDocuments().get(0).getFilePath()).isEqualTo(linesOfPersistenceFile.get(1));
+	}
 	
 	
 }
