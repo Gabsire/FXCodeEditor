@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javafx.stage.FileChooser;
-import main.com.editor.service.FileOperationsService;
+import main.java.com.editor.service.FileOperationsService;
 
 public class FileOperationsServiceTest {
 

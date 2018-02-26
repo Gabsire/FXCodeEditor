@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="DEV_HOME" value="c:/logs" />
+
+	<appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+		<file>${DEV_HOME}/FXCodeEditor.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d [%thread] %-5level %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="TRACE">
+		<appender-ref ref="fileAppender" />
+	</root>
+
+</configuration>

@@ -1,4 +1,4 @@
-package main.com.editor.service;
+package main.java.com.editor.service;
 
 import javafx.scene.control.ToolBar;
 

@@ -1,6 +1,4 @@
-package main.com.editor.controller;
-
-import java.io.IOException;
+package main.java.com.editor.controller;
 
 import org.controlsfx.control.textfield.CustomTextField;
 import org.fxmisc.richtext.CodeArea;
@@ -11,9 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
-import main.com.editor.persistence.PersistenceManager;
-import main.com.editor.service.FileOperationsService;
-import main.com.editor.service.SearchService;
+import main.java.com.editor.persistence.PersistenceManager;
+import main.java.com.editor.service.FileOperationsService;
+import main.java.com.editor.service.SearchService;
 
 public class MainController {
 
@@ -65,10 +63,6 @@ public class MainController {
 	@FXML
 	public void closeSearchBar() {
 		searchService.close(searchBar);
-	}
-
-	public void handleIOException(String message, IOException exception) {
-		System.out.println(message + exception.getStackTrace());
 	}
 
 	public CodeArea getCodeArea() {

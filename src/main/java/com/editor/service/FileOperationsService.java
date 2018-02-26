@@ -1,4 +1,4 @@
-package main.com.editor.service;
+package main.java.com.editor.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,13 +8,17 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.fxmisc.richtext.CodeArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.stage.FileChooser;
-import main.com.editor.bean.Document;
-import main.com.editor.bean.DocumentManager;
-import main.com.editor.utils.Utils;
+import main.java.com.editor.bean.Document;
+import main.java.com.editor.bean.DocumentManager;
+import main.java.com.editor.utils.Utils;
 
 public class FileOperationsService {
+
+	private static final Logger logger = LoggerFactory.getLogger(FileOperationsService.class);
 
 	DocumentManager documentManager = DocumentManager.getInstance();
 
@@ -30,7 +34,7 @@ public class FileOperationsService {
 				appendNewDocumentToManager(file);
 				return true;
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("IOException occurred while saving code area content to file: ", e);
 			}
 		}
 		return false;
@@ -47,7 +51,7 @@ public class FileOperationsService {
 				copyFileContentToCodeArea(codeArea, file);
 				return true;
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("IOException occurred while loading file: ", e);
 			}
 		}
 		return false;
@@ -68,7 +72,7 @@ public class FileOperationsService {
 	}
 
 	public void copyCodeAreaContentToFile(CodeArea codeArea, File file) throws IOException {
-		
+
 		String content = codeArea.getText();
 		byte[] strToBytes = content.getBytes();
 		Files.write(Paths.get(file.getPath()), strToBytes);

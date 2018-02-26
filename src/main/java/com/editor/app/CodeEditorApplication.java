@@ -1,4 +1,4 @@
-package main.com.editor.app;
+package main.java.com.editor.app;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,11 +30,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import main.com.editor.bean.Document;
-import main.com.editor.bean.DocumentManager;
-import main.com.editor.controller.MainController;
-import main.com.editor.persistence.PersistenceManager;
-import main.com.editor.utils.Constants;
+import main.java.com.editor.bean.Document;
+import main.java.com.editor.bean.DocumentManager;
+import main.java.com.editor.controller.MainController;
+import main.java.com.editor.persistence.PersistenceManager;
+import main.java.com.editor.utils.Constants;
 
 public class CodeEditorApplication extends Application {
 
@@ -66,6 +66,7 @@ public class CodeEditorApplication extends Application {
 		TreeView treeview = (TreeView) scene.lookup("#projectExplorer");
 		VBox.setMargin(fileNamesBox, new Insets(5, 1, 1, treeview.getPrefWidth() / 2));
 		fileNamesBox.setSpacing(2);
+		
 		DocumentManager documentManager = PersistenceManager.loadDocuments();
 		List<Document> documents = documentManager.getDocuments();
 		List<Label> fileNames = new ArrayList<>();
@@ -217,6 +218,7 @@ public class CodeEditorApplication extends Application {
 
 	private void handleFileNameMouseClick(CodeArea codeArea, DocumentManager documentManager, List<Label> fileNames,
 			Label fileName) {
+		
 		fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

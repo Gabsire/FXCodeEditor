@@ -1,4 +1,4 @@
-package main.com.editor.bean;
+package main.java.com.editor.bean;
 
 public class Document {
 

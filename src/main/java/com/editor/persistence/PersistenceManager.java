@@ -1,4 +1,4 @@
-package main.com.editor.persistence;
+package main.java.com.editor.persistence;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,13 +11,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import main.com.editor.bean.Document;
-import main.com.editor.bean.DocumentManager;
-import main.com.editor.utils.Constants;
-import main.com.editor.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import main.java.com.editor.bean.Document;
+import main.java.com.editor.bean.DocumentManager;
+import main.java.com.editor.service.FileOperationsService;
+import main.java.com.editor.utils.Constants;
+import main.java.com.editor.utils.Utils;
 
 public class PersistenceManager {
 
+	private static final Logger logger = LoggerFactory.getLogger(FileOperationsService.class);
 	private static DocumentManager documentManager = DocumentManager.getInstance();
 
 	public static void saveDocuments() {
@@ -29,7 +34,7 @@ public class PersistenceManager {
 			writer.write(documentManager.getCurrentOpenIndex() + Constants.NEWLINE);
 			writeDocumentPathsToPersistenceFile(writer);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("IOException occured while saving documents: ", e);
 		}
 	}
 
@@ -66,7 +71,7 @@ public class PersistenceManager {
 				line = reader.readLine();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("IOException occured while loading documents:", e);
 		}
 		return documentManager;
 	}
@@ -79,7 +84,7 @@ public class PersistenceManager {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("IOException occured while getting persistence file:", e);
 			}
 		}
 		return file;

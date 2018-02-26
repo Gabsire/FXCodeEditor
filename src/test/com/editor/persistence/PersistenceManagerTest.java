@@ -15,9 +15,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import main.com.editor.bean.DocumentManager;
-import main.com.editor.persistence.PersistenceManager;
-import main.com.editor.utils.Constants;
+import main.java.com.editor.bean.DocumentManager;
+import main.java.com.editor.persistence.PersistenceManager;
+import main.java.com.editor.utils.Constants;
 
 public class PersistenceManagerTest {
 

@@ -1,4 +1,4 @@
-package main.com.editor.utils;
+package main.java.com.editor.utils;
 
 public class Utils {
 
