@@ -40,6 +40,9 @@ public class PersistenceManager {
 
 	public static DocumentManager loadDocuments() {
 
+		// remove all the documents from the manager from a previous loading if applies
+		documentManager.getDocuments().removeAll(documentManager.getDocuments());
+		
 		boolean firstLine = true;
 		File persistenceFile = getPersistenceFile();
 

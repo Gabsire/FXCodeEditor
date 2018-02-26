@@ -38,7 +38,16 @@ import main.java.com.editor.utils.Constants;
 
 public class CodeEditorApplication extends Application {
 
-	int maxLineNumber = 0;
+	private static FXMLLoader fxmlLoader;
+	private static Parent root;
+	private static MainController controller;
+
+	private static Scene scene;
+	private static HBox fileNamesBox, areasBox;
+	private static DocumentManager documentManager = PersistenceManager.loadDocuments();
+	private static CodeArea codeArea = new CodeArea();
+
+	private int maxLineNumber = 0;
 
 	public static void main(String[] args) {
 		Application.launch(CodeEditorApplication.class, args);
@@ -50,24 +59,46 @@ public class CodeEditorApplication extends Application {
 		// initialize stage and scene
 		stage.setTitle(Constants.STAGE_DEFAULT_TITLE);
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditorMainWindow.fxml"));
-		Parent root = (Parent) fxmlLoader.load();
-		MainController controller = fxmlLoader.<MainController>getController();
+		fxmlLoader = new FXMLLoader(getClass().getResource("EditorMainWindow.fxml"));
+		root = (Parent) fxmlLoader.load();
+		controller = fxmlLoader.<MainController>getController();
 
-		Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+		scene = new Scene(root, stage.getWidth(), stage.getHeight());
 
 		// initialize and attach code area to main controller
-		CodeArea codeArea = new CodeArea();
 		codeArea.setId("codeArea");
 		codeArea.setStyle(Constants.CODE_AREA_DEFAULT_STYLE);
 
 		// file name tabs for each document above code area
-		HBox fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
+		fileNamesBox = (HBox) scene.lookup("#fileNamesBox");
 		TreeView treeview = (TreeView) scene.lookup("#projectExplorer");
 		VBox.setMargin(fileNamesBox, new Insets(5, 1, 1, treeview.getPrefWidth() / 2));
 		fileNamesBox.setSpacing(2);
 
-		DocumentManager documentManager = PersistenceManager.loadDocuments();
+		initializeComponentsFromDocuments(codeArea);
+
+		handleCodeAreaChange(scene, codeArea);
+		controller.setCodeArea(codeArea);
+		initLineNumbers(codeArea);
+		bindCodeAreaDimensionToScene(codeArea, scene);
+
+		// initialize container boxes
+		areasBox = (HBox) scene.lookup("#areasBox");
+		areasBox.getChildren().add(codeArea);
+
+		applySyntaxColoringToArea(codeArea);
+		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
+
+		stage.setScene(scene);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent we) {
+				controller.close();
+			}
+		});
+		stage.show();
+	}
+
+	public static void initializeComponentsFromDocuments(CodeArea codeArea) {
 
 		// get documents for tabs and texts
 		List<Document> documents = documentManager.getDocuments();
@@ -76,6 +107,9 @@ public class CodeEditorApplication extends Application {
 		Document newTabDocument = new Document(Constants.NEW_TAB_LABEL, Constants.EMPTY_TEXT, Constants.EMPTY_TEXT);
 		documents.add(newTabDocument);
 		List<Label> fileNames = new ArrayList<>();
+
+		// remove all the children from a previous initialization if applies
+		fileNamesBox.getChildren().removeAll(fileNamesBox.getChildren());
 
 		if (!documents.isEmpty()) {
 
@@ -97,30 +131,10 @@ public class CodeEditorApplication extends Application {
 			codeArea.replaceText(
 					documentManager.getDocuments().get(documentManager.getCurrentOpenIndex()).getContent());
 		}
-
-		handleCodeAreaChange(scene, codeArea);
-
-		controller.setCodeArea(codeArea);
-		initLineNumbers(codeArea);
-		bindCodeAreaDimensionToScene(codeArea, scene);
-
-		// initialize container boxes
-		HBox areasBox = (HBox) scene.lookup("#areasBox");
-		areasBox.getChildren().add(codeArea);
-
-		applySyntaxColoringToArea(codeArea);
-		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
-
-		stage.setScene(scene);
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent we) {
-				controller.close();
-			}
-		});
-		stage.show();
 	}
 
 	private void handleCodeAreaChange(Scene scene, CodeArea codeArea) {
+
 		codeArea.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -151,7 +165,8 @@ public class CodeEditorApplication extends Application {
 		});
 	}
 
-	public void applySyntaxColoringToArea(CodeArea codeArea) {
+	private void applySyntaxColoringToArea(CodeArea codeArea) {
+
 		codeArea.richChanges().filter(character -> !character.getInserted().equals(character.getRemoved())) // XXX
 				.subscribe(change -> {
 					codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
@@ -159,6 +174,7 @@ public class CodeEditorApplication extends Application {
 	}
 
 	private void bindCodeAreaDimensionToScene(CodeArea codeArea, Scene scene) {
+
 		bindCodeAreaWidthToScene(codeArea, scene);
 		bindCoreAreaHeightToScene(codeArea, scene);
 	}
@@ -214,8 +230,8 @@ public class CodeEditorApplication extends Application {
 		return styleSpansBuilder.create();
 	}
 
-	private void handleFileNameMouseClick(CodeArea codeArea, DocumentManager documentManager, List<Label> fileNames,
-			Label fileName) {
+	private static void handleFileNameMouseClick(CodeArea codeArea, DocumentManager documentManager,
+			List<Label> fileNames, Label fileName) {
 
 		fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override

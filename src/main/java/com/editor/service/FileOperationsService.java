@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.stage.FileChooser;
+import main.java.com.editor.app.CodeEditorApplication;
 import main.java.com.editor.bean.Document;
 import main.java.com.editor.bean.DocumentManager;
 import main.java.com.editor.utils.Utils;
@@ -32,6 +33,7 @@ public class FileOperationsService {
 			try {
 				copyCodeAreaContentToFile(codeArea, file);
 				appendNewDocumentToManager(file);
+				//CodeEditorApplication.initializeComponentsFromDocuments(codeArea); TODO: find a way to reload tabs
 				return true;
 			} catch (IOException e) {
 				logger.error("IOException occurred while saving code area content to file: ", e);
