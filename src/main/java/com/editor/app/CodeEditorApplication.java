@@ -66,31 +66,29 @@ public class CodeEditorApplication extends Application {
 		TreeView treeview = (TreeView) scene.lookup("#projectExplorer");
 		VBox.setMargin(fileNamesBox, new Insets(5, 1, 1, treeview.getPrefWidth() / 2));
 		fileNamesBox.setSpacing(2);
-		
+
 		DocumentManager documentManager = PersistenceManager.loadDocuments();
+
+		// get documents for tabs and texts
 		List<Document> documents = documentManager.getDocuments();
+
+		// put new tab to get to quick empty document
+		Document newTabDocument = new Document(Constants.NEW_TAB_LABEL, Constants.EMPTY_TEXT, Constants.EMPTY_TEXT);
+		documents.add(newTabDocument);
 		List<Label> fileNames = new ArrayList<>();
 
 		if (!documents.isEmpty()) {
 
-			for (int i = 0; i < documents.size() + 1; i++) {
+			for (int i = 0; i < documents.size(); i++) {
 
 				Label fileName = new Label();
-
-				if (documents.size() == i) {
-					fileName.setId("newtab");
-					fileName.setText("New Tab");
-
-				} else {
-					fileName.setId("filename" + i);
-					fileName.setText(documents.get(i).getFileName());
-				}
-
-				fileName.getStyleClass().add("filenames");
+				fileName.setId("filename" + i);
+				fileName.setText(documents.get(i).getFileName());
+				fileName.getStyleClass().add(Constants.TAB_STYLECLASS);
 				fileNames.add(fileName);
 
 				if (documentManager.getCurrentOpenIndex() == i) {
-					fileName.getStyleClass().add("selectedFilename");
+					fileName.getStyleClass().add(Constants.SELECTED_TAB_STYLECLASS);
 				}
 
 				fileNamesBox.getChildren().add(fileName);
@@ -110,7 +108,7 @@ public class CodeEditorApplication extends Application {
 		HBox areasBox = (HBox) scene.lookup("#areasBox");
 		areasBox.getChildren().add(codeArea);
 
-		applyColorSyntaxToArea(codeArea);
+		applySyntaxColoringToArea(codeArea);
 		scene.getStylesheets().add(getClass().getResource("../style/ColorSyntax.css").toExternalForm());
 
 		stage.setScene(scene);
@@ -132,15 +130,15 @@ public class CodeEditorApplication extends Application {
 				int character = position.getMinor();
 				++line;
 
-				Label currentLineLabel = (Label) scene.lookup("#currentLineLabel");
-				Label lineTotalLabel = (Label) scene.lookup("#lineTotalLabel");
-				Label currentCharacterLabel = (Label) scene.lookup("#currentCharacterLabel");
+				Label currentLineLabel = (Label) scene.lookup("#currentLineLabel"),
+						lineTotalLabel = (Label) scene.lookup("#lineTotalLabel"),
+						currentCharacterLabel = (Label) scene.lookup("#currentCharacterLabel");
 
-				currentLineLabel.setText("Current line: " + line);
-				currentCharacterLabel.setText("Current character: " + character);
+				currentLineLabel.setText(Constants.INFO_CURRENT_LINE + line);
+				currentCharacterLabel.setText(Constants.INFO_CURRENT_CHARACTER + character);
 
 				if (maxLineNumber < line) {
-					lineTotalLabel.setText("Total lines: " + line);
+					lineTotalLabel.setText(Constants.INFO_TOTAL_LINES + line);
 					maxLineNumber = line;
 				}
 			}
@@ -153,7 +151,7 @@ public class CodeEditorApplication extends Application {
 		});
 	}
 
-	public void applyColorSyntaxToArea(CodeArea codeArea) {
+	public void applySyntaxColoringToArea(CodeArea codeArea) {
 		codeArea.richChanges().filter(character -> !character.getInserted().equals(character.getRemoved())) // XXX
 				.subscribe(change -> {
 					codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
@@ -218,13 +216,13 @@ public class CodeEditorApplication extends Application {
 
 	private void handleFileNameMouseClick(CodeArea codeArea, DocumentManager documentManager, List<Label> fileNames,
 			Label fileName) {
-		
+
 		fileName.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 
-				if (!fileName.getStyleClass().contains("selectedFilename")) {
-					fileNames.forEach(filename -> filename.getStyleClass().remove("selectedFilename"));
+				if (!fileName.getStyleClass().contains(Constants.SELECTED_TAB_STYLECLASS)) {
+					fileNames.forEach(filename -> filename.getStyleClass().remove(Constants.SELECTED_TAB_STYLECLASS));
 					selectFileNameLabel(fileName);
 				}
 			}
@@ -233,7 +231,7 @@ public class CodeEditorApplication extends Application {
 
 				int fileNameIndex = getFileNameIndex(fileName);
 				displayDocumentContent(fileNameIndex);
-				fileName.getStyleClass().add("selectedFilename");
+				fileName.getStyleClass().add(Constants.SELECTED_TAB_STYLECLASS);
 			}
 
 			private void displayDocumentContent(int fileNameIndex) {
@@ -242,8 +240,7 @@ public class CodeEditorApplication extends Application {
 			}
 
 			private int getFileNameIndex(Label fileName) {
-				int fileNameIndex = Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
-				return fileNameIndex;
+				return Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
 			}
 		});
 	}

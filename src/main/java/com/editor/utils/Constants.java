@@ -3,9 +3,21 @@ package main.java.com.editor.utils;
 import java.util.regex.Pattern;
 
 public class Constants {
+	
+	//tabs initialization
+	public static final String NEW_TAB_LABEL = "New Tab";
+	public static final String TAB_STYLECLASS = "filenames";
+	public static final String SELECTED_TAB_STYLECLASS = "selectedFilename";
 
+	// recurring characters
 	public static final String NEWLINE = "\n";
 	public static final String PATH_SEPARATOR = "\\";
+	public static final String EMPTY_TEXT = "";
+	
+	// info labels
+	public static final String INFO_TOTAL_LINES = "Total lines: ";
+	public static final String INFO_CURRENT_CHARACTER = "Current character: ";
+	public static final String INFO_CURRENT_LINE = "Current line: ";
 
 	public static final String PERSISTENCE_FILE_PATH = "data\\persistence.dat";
 
