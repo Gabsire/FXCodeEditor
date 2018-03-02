@@ -32,8 +32,12 @@ public class FileOperationsService {
 
 			try {
 				copyCodeAreaContentToFile(codeArea, file);
-				appendNewDocumentToManager(file);
-				//CodeEditorApplication.initializeComponentsFromDocuments(codeArea); TODO: find a way to reload tabs
+
+				Document document = documentManager.getDocuments().get(documentManager.getCurrentOpenIndex());
+				document.setFileName(file.getName());
+				document.setFilePath(file.getPath());
+				document.setContent(codeArea.getText());
+				CodeEditorApplication.loadLabelsFromDocuments(codeArea);
 				return true;
 			} catch (IOException e) {
 				logger.error("IOException occurred while saving code area content to file: ", e);
@@ -85,12 +89,6 @@ public class FileOperationsService {
 		List<String> contentAsList = Files.readAllLines(Paths.get(file.getPath()), StandardCharsets.UTF_8);
 		String content = String.join("\n", contentAsList);
 		codeArea.replaceText(content);
-	}
-
-	public void appendNewDocumentToManager(File file) {
-		Document document = new Document(file.getName(), file.getPath(), null);
-		documentManager.getDocuments().add(document);
-		documentManager.setCurrentOpenIndex(documentManager.getDocuments().indexOf(document));
 	}
 
 }

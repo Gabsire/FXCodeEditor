@@ -20,7 +20,7 @@
     -glyph-name: SEARCH;
 }
 
-.closeSearchBtnIcon {
+.closeBtnIcon {
     -glyph-size: 18.0;
     -glyph-name: CLOSE;
 }
@@ -40,6 +40,10 @@
 
 .selectedFilename{
 	-fx-background-color: #ffffcc;
+}
+
+#fileNameCloseBtn{
+	-fx-background-color: transparent;
 }
 
 /* areas */

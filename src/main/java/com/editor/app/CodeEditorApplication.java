@@ -13,6 +13,8 @@ import org.fxmisc.richtext.StyleSpans;
 import org.fxmisc.richtext.StyleSpansBuilder;
 import org.fxmisc.richtext.TwoDimensional.Position;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,6 +25,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
@@ -75,7 +79,7 @@ public class CodeEditorApplication extends Application {
 		VBox.setMargin(fileNamesBox, new Insets(5, 1, 1, treeview.getPrefWidth() / 2));
 		fileNamesBox.setSpacing(2);
 
-		initializeComponentsFromDocuments(codeArea);
+		loadLabelsFromDocuments(codeArea);
 
 		handleCodeAreaChange(scene, codeArea);
 		controller.setCodeArea(codeArea);
@@ -98,15 +102,18 @@ public class CodeEditorApplication extends Application {
 		stage.show();
 	}
 
-	public static void initializeComponentsFromDocuments(CodeArea codeArea) {
+	public static void loadLabelsFromDocuments(CodeArea codeArea) {
 
 		// get documents for tabs and texts
 		List<Document> documents = documentManager.getDocuments();
-
-		// put new tab to get to quick empty document
-		Document newTabDocument = new Document(Constants.NEW_TAB_LABEL, Constants.EMPTY_TEXT, Constants.EMPTY_TEXT);
-		documents.add(newTabDocument);
 		List<Label> fileNames = new ArrayList<>();
+		
+		if (!documents.get(documents.size() - 1).getFileName().equals(Constants.NEW_TAB_LABEL)) {
+
+			// put new tab to get to quick empty document
+			Document newTabDocument = new Document(Constants.NEW_TAB_LABEL, Constants.EMPTY_TEXT, Constants.EMPTY_TEXT);
+			documents.add(newTabDocument);
+		}
 
 		// remove all the children from a previous initialization if applies
 		fileNamesBox.getChildren().removeAll(fileNamesBox.getChildren());
@@ -116,7 +123,25 @@ public class CodeEditorApplication extends Application {
 			for (int i = 0; i < documents.size(); i++) {
 
 				Label fileName = new Label();
+				FontAwesomeIconView icon = new FontAwesomeIconView();
+				icon.setStyleClass("closeBtnIcon");
+				Button closeButton = new Button();
+				closeButton.setGraphic(icon);
+				closeButton.setId("fileNameCloseBtn");
+
+				closeButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						int ndx = Integer.parseInt(fileName.getId().substring(fileName.getId().length() - 1));
+						documentManager.getDocuments().remove(ndx);
+						loadLabelsFromDocuments(codeArea);
+						documentManager.setCurrentOpenIndex(0);
+					}
+				});
+
 				fileName.setId("filename" + i);
+				fileName.setGraphic(closeButton);
+				fileName.setContentDisplay(ContentDisplay.RIGHT);
 				fileName.setText(documents.get(i).getFileName());
 				fileName.getStyleClass().add(Constants.TAB_STYLECLASS);
 				fileNames.add(fileName);

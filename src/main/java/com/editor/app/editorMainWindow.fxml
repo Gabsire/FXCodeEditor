@@ -40,7 +40,7 @@
 				<Button fx:id="closeSearchBtn" styleClass="closeSearchBtn"
 					onAction="#closeSearchBar">
 					<graphic>
-						<FontAwesomeIconView styleClass="closeSearchBtnIcon" />
+						<FontAwesomeIconView styleClass="closeBtnIcon" />
 					</graphic>
 				</Button>
 				<CustomTextField fx:id="searchField">
